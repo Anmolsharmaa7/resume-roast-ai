@@ -73,3 +73,4 @@ ResumeRoast AI is a full-stack resume analysis and improvement platform. It uses
 - [ ] User can edit the improved resume in the builder
 - [ ] Final resume downloads as a selectable-text PDF
 - [ ] All endpoints enforce user ownership (no ID spoofing)
+# resume-roast-ai
