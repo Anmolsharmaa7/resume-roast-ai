@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  resumes      Resume[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Resume {
+  id                   String           @id @default(uuid())
+  userId               String
+  user                 User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  originalFilename     String
+  extractedText        String           @db.Text
+  targetJobDescription String?          @db.Text
+  analyses             ResumeAnalysis[]
+  versions             ResumeVersion[]
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+
+  @@map("resumes")
+}
+
+model ResumeAnalysis {
+  id               String   @id @default(uuid())
+  resumeId         String
+  resume           Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  analysisData     Json     // Stores the structured AI analysis
+  overallScore     Int
+  atsScore         Int
+  jobMatchScore    Int
+  createdAt        DateTime @default(now())
+
+  @@map("resume_analyses")
+}
+
+model ResumeVersion {
+  id               String   @id @default(uuid())
+  resumeId         String
+  resume           Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  versionNumber    Int
+  content          Json     // Stores the structured resume content (personal info, experience, etc.)
+  improvementNotes String?  @db.Text
+  createdAt        DateTime @default(now())
+
+  @@map("resume_versions")
+}
