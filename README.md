@@ -65,7 +65,7 @@ ResumeRoast AI is a full-stack resume analysis and improvement platform. It uses
 
 ## 🧪 Testing Checklist
 
-- [ ] User can sign up and log in
+- [ ] User can sign up and log In
 - [ ] User can upload PDF and DOCX files
 - [ ] AI analysis generates a structured JSON response
 - [ ] Analysis results are displayed correctly in the frontend
